@@ -8,7 +8,7 @@ if hasattr(sys, 'frozen'):
 from PyQt5.QtWidgets import *
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import Qt
-from macro_const import DictCommandInfo
+from macro_const import DictCommandInfo, DictCommandInfoMacro
 
 
 class TreeWidgetClass:
@@ -26,7 +26,7 @@ class TreeWidgetClass:
         # 设置列数
         self.treeWidget.setColumnCount(1)
         # 设置树形控件头部的标题
-        self.treeWidget.setHeaderLabels(['CRC calculate'])
+        self.treeWidget.setHeaderLabels(['选择 CRC 项'])
         self.treeWidget.setColumnWidth(0, 120)
         # 设置节点
         for value in DictCommandInfo.keys():
@@ -55,19 +55,35 @@ class TreeWidgetClass:
             # 到下一个节点
             item = item.__iadd__(1)
 
+    def Tree_Clicked(self, iteme, column):
+        print("ssdafasfasf")
+        # item = self.treeWidget.currentItem()
+        # print("key=%s " % item.text(0))
 
     def handlechanged(self, iteme, column):
+        print("x %s " % iteme.text(0))
         # set unchecked
         item = QtWidgets.QTreeWidgetItemIterator(self.treeWidget)
         # 该类的value() 即为QTreeWidgetItem
         while item.value():
-            # print("1 %s " % item.value().text(0))
+            print("x %s " % item.value().text(0))
             if item.value().text(0) != iteme.text(0):
-                # print("1 change:%s" % item.value().text(0))
+                print("1 change:%s" % item.value().text(0))
                 item.value().setCheckState(0, Qt.Unchecked)
             else:
-                # print("2 change:%s" % item.value().text(0))
+                print("2 change:%s" % item.value().text(0))
                 item.value().setCheckState(0, Qt.Checked)
                 self.show(DictCommandInfo[item.value().text(0)])
+            # 到下一个节点
+            item = item.__iadd__(1)
+
+    def treegetchecked(self):
+        # set unchecked
+        item = QtWidgets.QTreeWidgetItemIterator(self.treeWidget)
+        # 该类的value() 即为QTreeWidgetItem
+        while item.value():
+            if item.value().checkState(0) == Qt.Checked:
+                print(item.value().text(0))
+                return DictCommandInfoMacro[item.value().text(0)]
             # 到下一个节点
             item = item.__iadd__(1)
