@@ -55,23 +55,18 @@ class TreeWidgetClass:
             # 到下一个节点
             item = item.__iadd__(1)
 
-    def Tree_Clicked(self, iteme, column):
-        print("ssdafasfasf")
-        # item = self.treeWidget.currentItem()
-        # print("key=%s " % item.text(0))
-
     def handlechanged(self, iteme, column):
         print("x %s " % iteme.text(0))
         # set unchecked
         item = QtWidgets.QTreeWidgetItemIterator(self.treeWidget)
         # 该类的value() 即为QTreeWidgetItem
         while item.value():
-            print("x %s " % item.value().text(0))
+            # print("x %s " % item.value().text(0))
             if item.value().text(0) != iteme.text(0):
-                print("1 change:%s" % item.value().text(0))
+                # print("1 change:%s" % item.value().text(0))
                 item.value().setCheckState(0, Qt.Unchecked)
             else:
-                print("2 change:%s" % item.value().text(0))
+                # print("2 change:%s" % item.value().text(0))
                 item.value().setCheckState(0, Qt.Checked)
                 self.show(DictCommandInfo[item.value().text(0)])
             # 到下一个节点

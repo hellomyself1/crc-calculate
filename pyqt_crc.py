@@ -6,7 +6,7 @@ from PyQt5.QtCore import pyqtSignal, QTimer
 from crc_windows import Ui_crcform
 import treewidget
 import crc_cal
-from macro_const import AllCrcItems
+from macro_const import AllCrcItems, DictDisplayLable, ListDisplayLable
 import os_utils
 import re
 
@@ -32,9 +32,26 @@ class Pyqt5Crc(QtWidgets.QMainWindow, Ui_crcform):
         self.crccal = crc_cal.CrcCal()
 
     def forminit(self):
-        self.textEdit_putin.setText("123456789")
+        self.textEdit_putin.setText("12345678")
+        self.radioButton_ascii.setText(ListDisplayLable[0])
         self.radioButton_ascii.setChecked(True)
+        self.label_show.setText(DictDisplayLable[ListDisplayLable[0]])
+        self.radioButton_ascii.toggled.connect(lambda: self.rbstate(self.radioButton_ascii))
         self.radioButton_hex.setChecked(False)
+        self.radioButton_hex.setText(ListDisplayLable[1])
+        self.radioButton_hex.toggled.connect(lambda: self.rbstate(self.radioButton_hex))
+
+    def rbstate(self, rb):
+        if rb.isChecked() is True:
+            self.label_show.setText(DictDisplayLable[rb.text()])
+        # # ascii
+        # if rb.text() == ListDisplayLable[0]:
+        #     if rb.isChecked() is True:
+        #         self.label_show.setText(DictDisplayLable[rb.text()])
+        # # hex
+        # if rb.text() == ListDisplayLable[1]:
+        #     if rb.isChecked() is True:
+        #         self.label_show.setText(DictDisplayLable[rb.text()])
 
     def signal_desc_emit(self, str):
         self.signal_desc.emit(str)
